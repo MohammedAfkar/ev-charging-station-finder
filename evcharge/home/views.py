@@ -134,7 +134,6 @@ def details(request, name):
             "data": dataDictionary
         }
 
-
     return render(request,'details.html',{'data': dumps(dataset),'stationname':name, 'price':stationdetail[0].chargeprice, 'address':stationdetail[0].address, 'charger':[stationdetail[0].charger1, stationdetail[0].charger2 ,stationdetail[0].charger3,stationdetail[0].charger4]})
 
 def addreviews(request, stationname):
