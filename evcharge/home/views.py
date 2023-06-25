@@ -24,7 +24,10 @@ def map(request):
         'latitude': stationdetail[i].latitude,
         'longitude': stationdetail[i].longitude,
         'chargeprice': stationdetail[i].chargeprice,
-        'charger': stationdetail[i].charger
+        'charger1': stationdetail[i].charger1,
+        'charger2': stationdetail[i].charger2,
+        'charger3': stationdetail[i].charger3,
+        'charger4': stationdetail[i].charger4,
         }
         dataJSON = dumps(dataDictionary)
         dataset.append(dataDictionary)
@@ -74,7 +77,10 @@ def addpoint(request):
             'latitude': stationdetail[i].latitude,
             'longitude': stationdetail[i].longitude,
             'chargeprice': stationdetail[i].chargeprice,
-            'charger': stationdetail[i].charger
+            'charger1': stationdetail[i].charger1,
+            'charger2': stationdetail[i].charger2,
+            'charger3': stationdetail[i].charger3,
+            'charger4': stationdetail[i].charger4
             }
             dataJSON = dumps(dataDictionary)
             dataset.append(dataDictionary)
@@ -91,22 +97,28 @@ def add(request):
         latitude = request.POST.get('latitude')
         longitude = request.POST.get('longitude')
         price = request.POST.get('price')
-        chargetype = request.POST.get('chargetype')
+        chargetype1 = request.POST.get('chargetype1')
+        if chargetype1 != "AC Type1":
+            chargetype1 = "Null"
+        chargetype2 = request.POST.get('chargetype2')
+        if chargetype2 != "CCS-1":
+            chargetype2 = 'Null'
+        chargetype3 = request.POST.get('chargetype3')
+        if chargetype3 != "Tesla Charge":
+            chargetype3 = 'Null'
+        chargetype4 = request.POST.get('chargetype4')
+        if chargetype4 != "AC Plug Point":
+            chargetype4 = "Null"
         address = request.POST.get('address')
-        print(chargetype)
-        print(latitude)
-
-        en = stationdetails(name=name,latitude=latitude,longitude=longitude,chargeprice=price,charger=chargetype,address=address)
+        en = stationdetails(name=name,latitude=latitude,longitude=longitude,chargeprice=price,charger1=chargetype1,charger2=chargetype2,charger3=chargetype3,charger4=chargetype4,address=address)
         en.save()
-        print('helo')
     else:
         pass
-    return render(request, 'addpoint.html')
+    return render(request, 'success.html')
 
 def details(request, name):
     stationdetail =list(stationdetails.objects.filter(name=name).all())
     reviewset =list(reviews.objects.filter(stationname=name).all())
-    # stationdetail =list(stationdetails.objects.all())
     dataset=[]
         # dump data
     for i in range(0,len(reviewset)):
@@ -121,9 +133,9 @@ def details(request, name):
         datasetmain = {
             "data": dataDictionary
         }
-   
-    return render(request,'details.html',{'data': dumps(dataset),'stationname':name, 'price':stationdetail[0].chargeprice, 'address':stationdetail[0].address, 'charger':stationdetail[0].charger })
-    # return render(request, 'details.html')
+
+
+    return render(request,'details.html',{'data': dumps(dataset),'stationname':name, 'price':stationdetail[0].chargeprice, 'address':stationdetail[0].address, 'charger':[stationdetail[0].charger1, stationdetail[0].charger2 ,stationdetail[0].charger3,stationdetail[0].charger4]})
 
 def addreviews(request, stationname):
     print(stationname)
@@ -139,4 +151,4 @@ def addreviews(request, stationname):
         en.save()
     else:
         pass
-    return render(request, 'map.html')
+    return render(request, 'success.html')

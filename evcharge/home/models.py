@@ -7,7 +7,10 @@ class stationdetails(models.Model):
     latitude = models.FloatField(max_length= 200)
     longitude = models.FloatField(max_length= 200)
     chargeprice = models.FloatField(max_length=100)
-    charger = models.CharField(max_length=50)
+    charger1 = models.CharField(max_length=50, null=True, blank=True)
+    charger2 = models.CharField(max_length=50, null=True, blank=True)
+    charger3 = models.CharField(max_length=50, null=True, blank=True)
+    charger4 = models.CharField(max_length=50, null=True, blank=True)
     address = models.CharField(max_length=300,default=None, blank=True, null=True)
 
 

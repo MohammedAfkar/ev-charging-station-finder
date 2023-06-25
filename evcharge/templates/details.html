@@ -152,11 +152,14 @@
         <ul>
           <span class="material-symbols-outlined" style="float:left; margin-top:0.6em;">
             ev_charger
-            </span><li style="padding:0.8em; margin-left:1em;">{{charger}}</li>
+            </span>
+            {% for i in charger %}
+            <li style="padding:0.8em; margin-left:1em; float:left;">{% if i != "Null" %} {{i}} {%endif%}</li>
+            {% endfor %}
         </ul>
       </div>
       <div class="description">
-        <h3>Station Description</h3>
+        <h3 style="margin-top:1em;">Station Description</h3>
         <ul>
           <div class="desc_align">
           <span class="material-symbols-outlined" style="float:left; margin-top:0.6em;">
@@ -201,7 +204,7 @@
 </body>
 <script>
   window.onload = (event) => {
-
+  
     console.log("page is fully loaded");
     var data = JSON.parse("{{data|escapejs}}");
     console.log(data);
